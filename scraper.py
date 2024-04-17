@@ -10,6 +10,7 @@ class Listing:
         return f"{self.title} {self.location} {self.price} {self.link}"
 
 import requests
+import csv
 from bs4 import BeautifulSoup
 
 url = 'https://washingtondc.craigslist.org/search/silver-spring-md/apa?lat=39.0553&laundry=1&lon=-77.0201&max_bedrooms=1&max_price=1550&search_distance=8.9#search=1~gallery~0~0'
@@ -37,3 +38,9 @@ for listing in listing_objects:
     print("Price:", listing.price)
     print("Link:", listing.link)
     print()
+
+with open('listings.csv', 'w', newline='', encoding='utf-8') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["Title", "Price", "Location", "Link"])
+    for listing in listing_objects:
+        writer.writerow([listing.title, listing.price, listing.location, listing.link])
